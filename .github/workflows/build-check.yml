@@ -25,6 +25,11 @@ jobs:
         run: npm install -g uglify-js
       - name: Minify JS files
         run: uglifyjs assets/js/plugins/jquery.greedy-navigation.js assets/js/_main.js assets/js/theme.js -c -m -o assets/js/main.min.js
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
       - name: Inspect rendered pages
         run: |
           echo "GENERATED HTML PAGES:"
@@ -37,7 +42,3 @@ jobs:
           grep -o 'jliugi@connect.ust.hk\|github.com/Vicent0205\|twitter.com/junteng88716710\|scholar.google.com[^" ]*' _site/index.html | sort -u || true
           echo "BASEURL LINK CHECK:"
           grep -o 'href="[^"]*LJT-Homepage/publications/"' _site/index.html | sort -u || true
-      - name: Build with Jekyll
-        run: bundle exec jekyll build
-        env:
-          JEKYLL_ENV: production
